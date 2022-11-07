@@ -18,6 +18,9 @@ class AbstractModel(models.Model):
         related_name='%(app_label)s_%(class)s_deleted'
     )
     deleted_at = models.DateTimeField(blank=True, null=True)
+    is_active = models.BooleanField(default=True, null=True)
+    is_delete = models.BooleanField(default=False, null=True)
+    order = models.IntegerField(default=0, null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -43,7 +46,7 @@ class Question(AbstractModel):
 
     def __str__(self) -> str:
         return self.question
-    
+
 
 class Answer(AbstractModel):
     question = models.ForeignKey(
