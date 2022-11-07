@@ -5,17 +5,20 @@ from django.conf import settings
 class AbstractModel(models.Model):
     created_user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name='%(app_label)s_%(class)s_created'
+        related_name='%(app_label)s_%(class)s_created',
+        null=True, blank=True
     )
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name='%(app_label)s_%(class)s_updated'
+        related_name='%(app_label)s_%(class)s_updated',
+        null=True, blank=True
     )
     updated_at = models.DateTimeField(auto_now=True, blank=True)
     deleted_user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name='%(app_label)s_%(class)s_deleted'
+        related_name='%(app_label)s_%(class)s_deleted',
+        null=True, blank=True
     )
     deleted_at = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=True, null=True)
