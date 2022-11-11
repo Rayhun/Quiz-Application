@@ -30,7 +30,11 @@ class AbstractModel(models.Model):
 
 
 class Section(AbstractModel):
+    image = models.ImageField(
+        blank=True, null=True, upload_to='sections/%Y/%m/%d'
+    )
     name = models.CharField(max_length=255, unique=True)
+    code = models.CharField(max_length=50, blank=True, null=True, unique=True)
 
     def __str__(self) -> str:
         return self.name
