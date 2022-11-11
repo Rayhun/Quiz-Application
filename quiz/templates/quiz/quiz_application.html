@@ -61,46 +61,60 @@
 {% block content %}
 <div class="d-flex justify-content-center row mt-5">
     <div class="col-md-10 col-lg-10">
-        <div class="border">
-            <div class="question bg-white p-3 border-bottom">
-                <div class="d-flex flex-row justify-content-between align-items-center mcq">
-                    <h4>{{ object.category }} MCQ Quiz</h4>
-                    <b>Total Marks: {{ total_marks }}</b>
-                </div>
-            </div>
-            <div class="question bg-white p-3 border-bottom">
-                {% for object in object_list %}
-                <div class="question-title">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h5 class="mt-1 ml-2"><span class="text-danger">Q.</span>{{ object }}</h5>
-                        </div>
-                        <div class="col-md-4">
-                            <h6 style="text-align: right;">1 x {{ object.number }} = {{ object.number }}</h6>
-                        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="border">
+                <div class="question bg-white p-3 border-bottom">
+                    <div class="d-flex flex-row justify-content-between align-items-center mcq">
+                        <h4>{{ object.category }} MCQ Quiz</h4>
+                        <b>Total Marks: {{ total_marks }}</b>
                     </div>
                 </div>
-                <div class="row">
-                    {% for obj in object.quiz_answer_answer.all %}
-                    <div class="col-md-3">
-                        <div class="ans ml-2">
-                            <label class="checkbox">
-                                <input type="checkbox" name="{{ obj }}" value="{{ obj.pk }}"><p>{{ obj }}</p>
-                            </label>
+                <div class="question bg-white p-3 border-bottom">
+                    {% for object in object_list %}
+                    <div class="question-title">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="mt-1 ml-2"><span class="text-danger">Q.</span>{{ object }}</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 style="text-align: right;">1 x {{ object.number }} = {{ object.number }}</h6>
+                            </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        {% for obj in object.quiz_answer_answer.all %}
+                        <div class="col-md-3">
+                            <div class="ans ml-2">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="{{ obj }}" value="{{ obj.pk }}">
+                                    <p class="checkboxs">{{ obj }}</p>
+                                </label>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                     {% endfor %}
                 </div>
-                {% endfor %}
+                <div class="align-items-center p-3 bg-white">
+                    <button 
+                    class="btn btn-primary d-flex align-items-center btn-success"
+                    type="submit">
+                        <i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;Submit
+                    </button>
+                </div>
             </div>
-            <div class="align-items-center p-3 bg-white">
-                <button 
-                class="btn btn-primary d-flex align-items-center btn-success"
-                type="button">
-                    <i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;Submit
-                </button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 {% endblock %}
+
+{% block js_extra %}
+<script>
+    $(document).ready(function () {
+        $(".checkboxs").click(function(){
+            var a = $(this).val();
+        });
+    });
+</script>
+{% endblock js_extra %}

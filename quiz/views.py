@@ -33,3 +33,16 @@ class QuizApplicationView(TemplateView):
             is_active=True
         ).count()
         return context
+    
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        return render(request, self.template_name, context)
+    
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        qs = self.model.objects.filter(is_active=True)
+        for obj in qs:
+            answer = obj.quiz_answer_answer.all()
+            for ans in answer:
+                pass
+        return render(request, self.template_name, context)
