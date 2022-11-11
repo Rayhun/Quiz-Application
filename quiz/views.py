@@ -5,14 +5,16 @@ from django.db.models import Sum
 from django.shortcuts import render
 from django.views.generic import TemplateView
 # local import
-from .models import Question
+from .models import Question, Section
 
 
-# class HomeView(TemplateView):
-#     template_name = 'home.html'
+class HomeView(TemplateView):
+    template_name = 'home.html'
 
-#     def get_context_data(self, **kwargs):
-#         context = super(HomeView, self).get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['object_lst'] = Section.objects.all()
+        return context
 
 
 class QuizApplicationView(TemplateView):

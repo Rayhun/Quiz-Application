@@ -7,5 +7,8 @@ from. import views
 app_name = 'quiz'
 
 urlpatterns = [
-    path('', views.QuizApplicationView.as_view(), name='quiz_application'),
+    path('', views.HomeView.as_view(), name='home'),
+    path(
+        'quiz/', views.QuizApplicationView.as_view(), name='quiz_application'
+    ),
 ]
