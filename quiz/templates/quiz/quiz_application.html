@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load answer_tag %}
 
 {% block static %}
 <style>
@@ -28,7 +29,6 @@
         text-align: center;
         border-radius: 3px;
         margin-top: 7px;
-        text-transform: uppercase;
     }
 
     label.checkbox input:checked+p {
@@ -51,6 +51,10 @@
         outline: 0 !important;
         box-shadow: none !important;
     }
+    h5 span{
+        font-size: 24px;
+        font-weight: 600;
+    }
 </style>
 {% endblock %}
 
@@ -61,13 +65,20 @@
             <div class="question bg-white p-3 border-bottom">
                 <div class="d-flex flex-row justify-content-between align-items-center mcq">
                     <h4>{{ object.category }} MCQ Quiz</h4>
+                    <b>Total Marks: {{ total_marks }}</b>
                 </div>
             </div>
             <div class="question bg-white p-3 border-bottom">
                 {% for object in object_list %}
-                <div class="d-flex flex-row align-items-center question-title">
-                    <h3 class="text-danger">Q.</h3>
-                    <h5 class="mt-1 ml-2">{{ object }}</h5>
+                <div class="question-title">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="mt-1 ml-2"><span class="text-danger">Q.</span>{{ object }}</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 style="text-align: right;">1 x {{ object.number }} = {{ object.number }}</h6>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     {% for obj in object.quiz_answer_answer.all %}

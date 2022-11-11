@@ -1,6 +1,7 @@
 # Python import
 import random
 # django import
+from django.db.models import Sum
 from django.shortcuts import render
 from django.views.generic import TemplateView
 # local import
@@ -24,6 +25,10 @@ class QuizApplicationView(TemplateView):
         qs = list(self.model.objects.filter(is_active=True))
         random.shuffle(qs)
         context['object_list'] = qs
+        context['total_marks'] = self.model.objects.filter(
+            is_active=True
+        ).aggregate(total_marks=Sum('number'))['total_marks']
+        
         context['total_quiz'] = self.model.objects.filter(
             is_active=True
         ).count()
