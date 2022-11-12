@@ -9,6 +9,7 @@ app_name = 'quiz'
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     path(
-        'quiz/', views.QuizApplicationView.as_view(), name='quiz_application'
+        'quiz/<str:slug>/', views.QuizApplicationView.as_view(),
+        name='quiz_application'
     ),
 ]

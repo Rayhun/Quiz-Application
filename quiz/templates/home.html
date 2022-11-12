@@ -2,11 +2,11 @@
 
 {% block content %}
 <section>
-    <div class="content mt-5">
-        <div class="row">
+    <div class="content my-5">
+        <div class="row content">
             {% for object in object_lst %}
-            <div class="col-md-3">
-                <a href="">
+            <div class="col-md-3 py-3">
+                <a href="{% url 'quiz:quiz_application' object.slug %}">
                     <div class="card">
                         <div class="card-body">
                             <img style="height: 200px;" src="{% if object.image %}{{ object.image.url }}{% endif %}" class="card-img-top" alt="...">

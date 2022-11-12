@@ -1,5 +1,15 @@
 from django.db import models
+from django.urls import reverse
 from django.conf import settings
+from django.utils.text import slugify
+
+
+class QuestionManager(models.Manager):
+    """Manager"""
+    def query(self, slug):
+        return Question.objects.filter(
+            is_active=True, section__slug=slug
+        )
 
 
 class AbstractModel(models.Model):
@@ -35,9 +45,15 @@ class Section(AbstractModel):
     )
     name = models.CharField(max_length=255, unique=True)
     code = models.CharField(max_length=50, blank=True, null=True, unique=True)
+    slug = models.SlugField(max_length=255, blank=True, null=True, unique=True)
 
     def __str__(self) -> str:
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
 class Question(AbstractModel):
@@ -50,6 +66,7 @@ class Question(AbstractModel):
     image = models.ImageField(
         blank=True, null=True, upload_to='questions/%Y/%m/%d'
     )
+    objects = QuestionManager()
 
     def __str__(self) -> str:
         return self.question
